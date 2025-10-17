@@ -1,19 +1,22 @@
 from flask import Flask, render_template, request, jsonify
 import os
+import json
 
 # Import our BookFestAgent
 from bookfest_agent import BookFestAgent
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='templates')
 
 # Initialize the agent
 agent = BookFestAgent()
 
+# Serve the main page
 @app.route('/')
 def index():
     """Serve the main HTML page"""
     return render_template('index.html')
 
+# API endpoints
 @app.route('/api/greeting')
 def greeting():
     """API endpoint to get the greeting message"""
@@ -55,6 +58,7 @@ def process_query():
     response = agent.process_user_query(query)
     return jsonify({'response': response})
 
+# For local development
 if __name__ == '__main__':
     # Get port from environment variable or default to 5000
     port = int(os.environ.get('PORT', 5000))

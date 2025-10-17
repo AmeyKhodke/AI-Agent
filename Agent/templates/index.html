@@ -315,6 +315,33 @@
     </div>
 
     <script>
+        // Global variables for static data
+        let bookfestData = null;
+        
+        // Load static data
+        async function loadStaticData() {
+            try {
+                const response = await fetch('/static/bookfest_data.json');
+                bookfestData = await response.json();
+                console.log('Static data loaded successfully');
+            } catch (error) {
+                console.error('Error loading static data:', error);
+                // Fallback data
+                bookfestData = {
+                    greeting: "Hello! How can I assist you with information from our Pune Bookfest today?",
+                    schedule: "The Pune Book Festival 2025 will be held from May 1-9, 2025.",
+                    social_media: {
+                        youtube: "🔗 YouTube: https://www.youtube.com/@PuneBookFest",
+                        facebook: "🔗 Facebook: https://www.facebook.com/PuneBookFest",
+                        instagram: "🔗 Instagram: https://www.instagram.com/PuneBookFest",
+                        website: "🌐 Website: https://68cf070d6f667a1e09ba881f--bookfest2025.netlify.app/"
+                    },
+                    location: "📍 Location: FC, New Delhi",
+                    more_details: "More details about the Pune Book Festival..."
+                };
+            }
+        }
+        
         // Function to open links in new tab
         function openLink(url) {
             window.open(url, '_blank');
@@ -367,22 +394,8 @@
                         // User says hi - show menu
                         showMenuInChat();
                     } else {
-                        // Process the message through the backend API
-                        fetch('/api/query', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({query: userMessage})
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            addMessage(data.response, false);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            addMessage("Sorry, I encountered an error processing your request.", false);
-                        });
+                        // Process the message with static data
+                        processUserQuery(userMessage);
                     }
                 }, 1000);
             }
@@ -397,24 +410,10 @@
             // Add typing indicator
             addTypingIndicator();
             
-            // Process the menu option through the backend API
+            // Process the menu option with static data
             setTimeout(() => {
                 removeTypingIndicator();
-                fetch('/api/info', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({option: option})
-                })
-                .then(response => response.json())
-                .then(data => {
-                    addMessage(data.response, false);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    addMessage("Sorry, I encountered an error processing your request.", false);
-                });
+                processMenuOption(option);
             }, 1000);
         }
 
@@ -462,6 +461,64 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
+        // Function to process user queries using static data
+        function processUserQuery(query) {
+            let response = "I can help you with information about the Pune Book Festival. Please select an option from the menu or ask about schedule, social media, location, or other details.";
+            
+            if (!bookfestData) {
+                addMessage(response, false);
+                return;
+            }
+            
+            query = query.toLowerCase();
+            
+            if (query.includes('schedule')) {
+                response = bookfestData.schedule;
+            } else if (query.includes('youtube')) {
+                response = bookfestData.social_media.youtube;
+            } else if (query.includes('facebook')) {
+                response = bookfestData.social_media.facebook;
+            } else if (query.includes('instagram')) {
+                response = bookfestData.social_media.instagram;
+            } else if (query.includes('website')) {
+                response = bookfestData.social_media.website;
+            } else if (query.includes('location') || query.includes('google')) {
+                response = bookfestData.location;
+            } else if (query.includes('detail') || query.includes('more')) {
+                response = bookfestData.more_details;
+            }
+            
+            addMessage(response, false);
+        }
+
+        // Function to process menu options using static data
+        function processMenuOption(option) {
+            if (!bookfestData) {
+                addMessage("Sorry, I encountered an error processing your request.", false);
+                return;
+            }
+            
+            let response = "Invalid option. Please select a number between 1 and 7.";
+            
+            if (option == 1) {
+                response = bookfestData.schedule;
+            } else if (option == 2) {
+                response = bookfestData.social_media.youtube;
+            } else if (option == 3) {
+                response = bookfestData.social_media.facebook;
+            } else if (option == 4) {
+                response = bookfestData.social_media.instagram;
+            } else if (option == 5) {
+                response = bookfestData.social_media.website;
+            } else if (option == 6) {
+                response = bookfestData.location;
+            } else if (option == 7) {
+                response = bookfestData.more_details;
+            }
+            
+            addMessage(response, false);
+        }
+
         // Function to clear chat
         function clearChat() {
             const chatContainer = document.getElementById('chatContainer');
@@ -474,6 +531,9 @@
                 sendMessage(event);
             }
         });
+        
+        // Load static data when page loads
+        window.addEventListener('DOMContentLoaded', loadStaticData);
     </script>
 </body>
 </html>

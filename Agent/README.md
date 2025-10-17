@@ -23,7 +23,7 @@ An intelligent AI assistant for the Pune Book Festival 2025 that retrieves and p
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/bookfest-agent.git
+   git clone <repository-url>
    cd bookfest-agent
    ```
 
@@ -58,21 +58,47 @@ bookfest-agent/
 ├── README.md             # Project documentation
 ├── USAGE.txt             # Usage instructions
 ├── start_agent.bat       # Windows batch script to start the server
-├── Procfile              # Heroku deployment configuration
-├── runtime.txt           # Python runtime version for Heroku
-├── setup.py              # Package setup file
-├── LICENSE               # License file
-├── .gitignore            # Git ignore file
+├── netlify.toml          # Netlify deployment configuration
 │
-├── templates/
-│   └── index.html        # Main web interface
-│
-├── docs/
-│   └── deployment.md     # Deployment guide
-│
-└── tests/
-    └── test_bookfest_agent.py  # Unit tests
+└── templates/
+    └── index.html        # Main web interface
 ```
+
+## Deployment to Netlify
+
+This application can be deployed to Netlify using the following steps:
+
+1. Create a Netlify account at [netlify.com](https://netlify.com)
+2. Install the Netlify CLI:
+   ```bash
+   npm install -g netlify-cli
+   ```
+3. Login to Netlify:
+   ```bash
+   netlify login
+   ```
+4. Initialize your project:
+   ```bash
+   netlify init
+   ```
+5. Deploy your site:
+   ```bash
+   netlify deploy
+   ```
+6. For production deployment:
+   ```bash
+   netlify deploy --prod
+   ```
+
+Alternatively, you can deploy by:
+1. Going to [netlify.com](https://netlify.com)
+2. Clicking "New site from Git"
+3. Connecting your Git provider (GitHub, GitLab, or Bitbucket)
+4. Selecting your repository
+5. Configuring the build settings:
+   - Build command: `pip install -r requirements.txt`
+   - Publish directory: `templates`
+6. Clicking "Deploy site"
 
 ## Customization
 
@@ -82,29 +108,10 @@ You can customize the assistant by modifying:
 - `templates/index.html` - Modify the UI/UX design
 - `app.py` - Change API endpoints or add new features
 
-## Deployment
-
-This application can be deployed to various platforms:
-
-- **Heroku** - Using Procfile and requirements.txt
-- **PythonAnywhere** - Direct upload and configuration
-- **AWS Elastic Beanstalk** - Using the EB CLI
-- **Google Cloud Platform** - Using App Engine
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is for educational purposes.
 
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - your.email@example.com
-
-Project Link: [https://github.com/yourusername/bookfest-agent](https://github.com/yourusername/bookfest-agent)
+Your Name - your.email@example.com
