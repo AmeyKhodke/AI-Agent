@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pune Book Festival AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .chat-container {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 18px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            line-height: 1.5;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bot-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .user-message {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .input-section {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 15px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        input[type="submit"] {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .clear-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            margin-left: 15px;
+        }
+        
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .menu-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .menu-button {
+            padding: 18px 20px;
+            background: white;
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .menu-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-button:nth-child(1):hover { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+        .menu-button:nth-child(2):hover { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; }
+        .menu-button:nth-child(3):hover { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: white; }
+        .menu-button:nth-child(4):hover { background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); color: white; }
+        .menu-button:nth-child(5):hover { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color: white; }
+        .menu-button:nth-child(6):hover { background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); color: white; }
+        .menu-button:nth-child(7):hover { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); color: white; }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 18px;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-left: 10px;
+        }
+        
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: bounce 1.5s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Scrollbar styling */
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .chat-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                height: 95vh;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
+            .chat-container {
+                padding: 15px;
+            }
+            
+            .message {
+                max-width: 90%;
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .input-section {
+                padding: 15px;
+                flex-direction: column;
+            }
+            
+            input[type="text"] {
+                padding: 12px 18px;
+            }
+            
+            input[type="submit"], .clear-btn {
+                padding: 12px 20px;
+            }
+            
+            .menu-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Pune Book Festival 2025</h1>
+            <p>Your AI Assistant for All BookFest Information</p>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot-message">
+                Hello! How can I assist you with information from our Pune Bookfest today?
+            </div>
+        </div>
+        
+        <div class="input-section">
+            <form onsubmit="sendMessage(event)" style="display: flex; flex: 1; gap: 15px;">
+                <input type="text" id="userMessage" placeholder="Type your message here...">
+                <input type="submit" value="Send">
+            </form>
+            <button class="clear-btn" onclick="clearChat()">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to open links in new tab
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+        
+        // Function to add a message to the chat
+        function addMessage(message, isUser) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Function to add a typing indicator
+        function addTypingIndicator() {
+            const chatContainer = document.getElementById('chatContainer');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = 'Thinking <div class="typing-dots"><span></span><span></span><span></span></div>';
+            chatContainer.appendChild(typingDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        // Function to remove typing indicator
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // Function to send a message
+        function sendMessage(event) {
+            event.preventDefault();
+            const userMessage = document.getElementById('userMessage').value.trim();
+            if (userMessage) {
+                addMessage(userMessage, true);
+                document.getElementById('userMessage').value = '';
+                
+                // Add typing indicator
+                addTypingIndicator();
+                
+                // Handle different conversation states
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    if (userMessage.toLowerCase().includes('hi') || userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hey')) {
+                        // User says hi - show menu
+                        showMenuInChat();
+                    } else {
+                        // Process the message through the backend API
+                        fetch('/api/query', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({query: userMessage})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            addMessage(data.response, false);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            addMessage("Sorry, I encountered an error processing your request.", false);
+                        });
+                    }
+                }, 1000);
+            }
+        }
+
+        // Function to send menu option
+        function sendMenuOption(option) {
+            // Add user message to chat
+            const optionText = getOptionText(option);
+            addMessage(optionText, true);
+            
+            // Add typing indicator
+            addTypingIndicator();
+            
+            // Process the menu option through the backend API
+            setTimeout(() => {
+                removeTypingIndicator();
+                fetch('/api/info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({option: option})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage(data.response, false);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    addMessage("Sorry, I encountered an error processing your request.", false);
+                });
+            }, 1000);
+        }
+
+        // Function to get text for menu option
+        function getOptionText(option) {
+            const options = {
+                1: 'Schedule',
+                2: 'YouTube',
+                3: 'Facebook',
+                4: 'Instagram',
+                5: 'Website',
+                6: 'Google Location',
+                7: 'More Details'
+            };
+            return options[option] || 'Unknown Option';
+        }
+
+        // Function to show menu in chat when user types "hi"
+        function showMenuInChat() {
+            const menuMessage = "Here's our menu for you:";
+            addMessage(menuMessage, false);
+            
+            // Add the menu buttons to the chat
+            const menuButtonsDiv = document.createElement('div');
+            menuButtonsDiv.className = 'menu-buttons';
+            menuButtonsDiv.innerHTML = `
+                <button class="menu-button" onclick="sendMenuOption(1)">📅 Schedule</button>
+                <button class="menu-button" onclick="openLink('https://www.youtube.com/@PuneBookFest')">📺 YouTube</button>
+                <button class="menu-button" onclick="openLink('https://www.facebook.com/PuneBookFest')">📘 Facebook</button>
+                <button class="menu-button" onclick="openLink('https://www.instagram.com/PuneBookFest')">📸 Instagram</button>
+                <button class="menu-button" onclick="openLink('https://68cf070d6f667a1e09ba881f--bookfest2025.netlify.app/')">🌐 Website</button>
+                <button class="menu-button" onclick="openLink('https://maps.google.com/?q=FC+New+Delhi')">📍 Google Location</button>
+                <button class="menu-button" onclick="sendMenuOption(7)">📖 More Details</button>
+            `;
+            
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot-message';
+            messageDiv.appendChild(menuButtonsDiv);
+            messageDiv.style.background = 'transparent';
+            messageDiv.style.boxShadow = 'none';
+            messageDiv.style.padding = '0';
+            messageDiv.style.marginTop = '10px';
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Function to clear chat
+        function clearChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '<div class="message bot-message">Hello! How can I assist you with information from our Pune Bookfest today?</div>';
+        }
+        
+        // Allow sending message with Enter key
+        document.getElementById('userMessage').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage(event);
+            }
+        });
+    </script>
+</body>
+</html>

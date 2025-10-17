@@ -1,0 +1,31 @@
+# This file provides instructions on how to use the Pune Book Festival AI Agent
+
+# For Command Line Interface:
+# Run the following command in your terminal:
+# python bookfest_agent.py
+
+# For Web Interface:
+# 1. Run the Flask application:
+#    python app.py
+# 2. Open your browser and go to http://127.0.0.1:5000
+
+# To install dependencies:
+# pip install -r requirements.txt
+
+# Features:
+# - Interactive menu system
+# - Information about Pune Book Festival 2025
+# - Schedule details
+# - Social media links
+# - Location information
+# - Detailed festival information
+
+print("Pune Book Festival AI Agent")
+print("===========================")
+print("To use the AI Agent:")
+print("1. For command line interface: python bookfest_agent.py")
+print("2. For web interface: python app.py")
+print("   Then open your browser to http://127.0.0.1:5000")
+print("")
+print("Make sure to install dependencies first:")
+print("pip install -r requirements.txt")
