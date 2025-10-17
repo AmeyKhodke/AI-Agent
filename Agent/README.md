@@ -1,80 +1,110 @@
-# Pune Book Festival AI Agent
+# Pune Book Festival 2025 AI Assistant
 
-An AI assistant that provides information about the Pune Book Festival 2025 using the official website as a knowledge base.
+An intelligent AI assistant for the Pune Book Festival 2025 that retrieves and presents information from the official website. This web-based assistant provides festival-goers with quick access to schedules, locations, social media links, and other important information.
 
 ## Features
 
-- Displays a user-friendly menu with festival information
-- Provides schedule details
-- Shares social media links (YouTube, Facebook, Instagram)
-- Shows website and location information
-- Offers detailed information about the festival
-- Both command-line and web interfaces
+- 📅 **Festival Schedule** - Get detailed information about daily events
+- 📍 **Location Information** - Find venue details and directions
+- 🔗 **Social Media Links** - Direct access to YouTube, Facebook, Instagram
+- 🌐 **Official Website** - Quick link to the festival website
+- 📖 **Detailed Information** - Learn more about the festival highlights
+- 💬 **Interactive Chat Interface** - User-friendly chatbot experience
 
-## Prerequisites
+## Technologies Used
 
-- Python 3.7 or higher
-- pip (Python package installer)
+- **Python** - Core programming language
+- **Flask** - Web framework for the backend
+- **HTML/CSS/JavaScript** - Frontend interface
+- **BeautifulSoup** - Web scraping for data extraction
+- **Requests** - HTTP library for API calls
 
 ## Installation
 
-1. Clone or download this repository
-2. Navigate to the project directory
-3. Install the required dependencies:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/bookfest-agent.git
+   cd bookfest-agent
+   ```
 
-```bash
-pip install -r requirements.txt
-```
+2. Install required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Run the application:
+   ```bash
+   python app.py
+   ```
+
+4. Open your browser and navigate to `http://localhost:5000`
 
 ## Usage
 
-### Option 1: Command Line Interface
-
-Run the AI agent in command-line mode:
-
-```bash
-python bookfest_agent.py
-```
-
-The agent will greet you and display the main menu. Select an option by entering the corresponding number (1-7).
-
-To exit the program, type 'quit' when prompted for input.
-
-### Option 2: Web Interface
-
-Run the Flask web application:
-
-```bash
-python app.py
-```
-
-Then open your browser and go to http://127.0.0.1:5000 to access the web interface.
-
-Alternatively, you can run the start_agent.bat file on Windows.
-
-To stop the server, press Ctrl+C in the terminal.
-
-## How It Works
-
-The AI agent fetches information from the Pune Book Festival website (https://68cf070d6f667a1e09ba881f--bookfest2025.netlify.app/) and stores it in a knowledge base. When users select menu options, the agent provides relevant information extracted from this knowledge base.
+1. Access the web interface at `http://localhost:5000`
+2. Type "hi", "hello", or "hey" to see the main menu
+3. Click on any menu option to get detailed information
+4. For options 1 (Schedule) and 7 (More Details), information will be displayed in the chat
+5. For options 2-6 (social media links), external websites will open in new tabs
 
 ## Project Structure
 
-- `bookfest_agent.py`: Main AI agent implementation
-- `app.py`: Flask web application
-- `requirements.txt`: Python dependencies
-- `templates/index.html`: Web interface
-- `start_agent.bat`: Windows batch file to start the web interface
-- `USAGE.txt`: Usage instructions
+```
+bookfest-agent/
+│
+├── app.py                 # Flask web application
+├── bookfest_agent.py      # Core AI agent logic
+├── requirements.txt       # Python dependencies
+├── README.md             # Project documentation
+├── USAGE.txt             # Usage instructions
+├── start_agent.bat       # Windows batch script to start the server
+├── Procfile              # Heroku deployment configuration
+├── runtime.txt           # Python runtime version for Heroku
+├── setup.py              # Package setup file
+├── LICENSE               # License file
+├── .gitignore            # Git ignore file
+│
+├── templates/
+│   └── index.html        # Main web interface
+│
+├── docs/
+│   └── deployment.md     # Deployment guide
+│
+└── tests/
+    └── test_bookfest_agent.py  # Unit tests
+```
 
 ## Customization
 
-You can modify the `BookFestAgent` class in `bookfest_agent.py` to:
-- Add new menu options
-- Enhance information extraction
-- Improve response formatting
-- Add new features
+You can customize the assistant by modifying:
 
-## Support
+- `bookfest_agent.py` - Update the knowledge base and responses
+- `templates/index.html` - Modify the UI/UX design
+- `app.py` - Change API endpoints or add new features
 
-For issues or feature requests, please open an issue in this repository.
+## Deployment
+
+This application can be deployed to various platforms:
+
+- **Heroku** - Using Procfile and requirements.txt
+- **PythonAnywhere** - Direct upload and configuration
+- **AWS Elastic Beanstalk** - Using the EB CLI
+- **Google Cloud Platform** - Using App Engine
+
+## Contributing
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+Your Name - [@your_twitter](https://twitter.com/your_twitter) - your.email@example.com
+
+Project Link: [https://github.com/yourusername/bookfest-agent](https://github.com/yourusername/bookfest-agent)

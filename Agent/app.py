@@ -27,7 +27,7 @@ def menu():
 @app.route('/api/info', methods=['POST'])
 def get_info():
     """API endpoint to get information based on user selection"""
-    data = request.json
+    data = request.json or {}
     option = data.get('option')
     
     if option == 1:
@@ -50,18 +50,12 @@ def get_info():
 @app.route('/api/query', methods=['POST'])
 def process_query():
     """API endpoint to process custom queries"""
-    data = request.json
+    data = request.json or {}
     query = data.get('query', '')
     response = agent.process_user_query(query)
     return jsonify({'response': response})
 
 if __name__ == '__main__':
-    # Create templates directory if it doesn't exist
-    if not os.path.exists('templates'):
-        os.makedirs('templates')
-    
-    # Move index.html to templates directory
-    if os.path.exists('index.html'):
-        os.rename('index.html', 'templates/index.html')
-    
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
